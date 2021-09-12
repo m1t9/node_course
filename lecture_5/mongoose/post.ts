@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
-import { userSchema } from "./user";
 
-const postSchema = new Schema(
+export const postSchema = new Schema(
   {
     title: {
       type: String,
@@ -14,7 +13,11 @@ const postSchema = new Schema(
       type: String,
       minlength: 50,
     },
-    author: userSchema,
+    authorId: {
+      type: String,
+      required: [true, "Author ID is required"],
+      minlength: 1,
+    }
   },
   {
     timestamps: true,
@@ -22,11 +25,11 @@ const postSchema = new Schema(
 );
 
 postSchema.static("getByUserName", async function (name: string) {
-  return await this.find({
+  return this.find({
     author: {
       userName: name,
     },
   });
 });
 
-export const Post = model("Post", postSchema);
+export const Post = model('Post', postSchema);

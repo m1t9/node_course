@@ -9,6 +9,8 @@ export const userSchema = new Schema({
     required: [true, "User name is required"],
   },
   firstName: String,
+  posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
 export const User = model("User", userSchema);
